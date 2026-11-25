@@ -1,0 +1,15 @@
+{
+  "_doc": "Plan de voix off. file = prise ElevenLabs dans assets/audio/vo/, start/end = extrait dans la prise (s, cf. silencedetect), at = position dans la vidéo (s), tempo = accélération (1 = aucune). 'B' remplace des phrases pour la version B du hook.",
+  "voice": {"name": "Théo - UGC Creator et publicité", "voice_id": "NBjtCdChq5Ph56VnCM8Z", "model": "eleven_v4"},
+  "A": [
+    {"file": "hook_2temps.mp3", "start": 0.00, "end": 2.14, "at": 0.10, "tempo": 1.0, "text": "Pack Motorex Cross Power deux temps :"},
+    {"file": "take1.mp3", "start": 4.22, "end": 5.66, "at": 2.55, "tempo": 1.0, "text": "Cinq bidons, cinq litres."},
+    {"file": "take1.mp3", "start": 2.19, "end": 4.04, "at": 4.90, "tempo": 1.0, "text": "Quatre achetés, le cinquième offert."},
+    {"file": "take1.mp3", "start": 5.92, "end": 8.23, "at": 9.65, "tempo": 1.0, "text": "Résultat : quinze euros quatre-vingt-seize le litre."},
+    {"file": "take1.mp3", "start": 8.40, "end": 9.53, "at": 11.98, "tempo": 1.0, "text": "Vingt pour cent d'économie."},
+    {"file": "prix_teams.mp3", "start": 0.00, "end": 1.38, "at": 13.15, "tempo": 1.0, "text": "Le meilleur prix du web."},
+    {"file": "prix_teams.mp3", "start": 1.69, "end": 5.02, "at": 14.70, "tempo": 1.0, "text": "Cent pour cent synthèse, développée avec les teams officiels."},
+    {"file": "take1.mp3", "start": 13.10, "end": 18.65, "at": 19.15, "tempo": 1.04, "text": "Soixante-dix-neuf euros quatre-vingts le pack, en stock chez FX Motors. Le lien du pack est juste en dessous."}
+  ],
+  "B": {"0": {"file": "hook_b.mp3", "start": 0.00, "end": 2.00, "at": 0.75, "tempo": 1.0, "text": "Quinze euros quatre-vingt-seize le litre. Oui, de la Motorex."}}
+}

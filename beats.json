@@ -1,0 +1,17 @@
+{
+ "source": "assets/audio/music_suspense.mp3",
+ "bpm": 99.38,
+ "big_hits_s": [
+  1.25,
+  15.65
+ ],
+ "hits_s": [
+  1.25,
+  3.65,
+  6.05,
+  10.85,
+  14.45,
+  15.65
+ ],
+ "offset_frames": 38
+}
