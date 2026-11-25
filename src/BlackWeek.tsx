@@ -5,15 +5,15 @@ import {Hairline, Label, MaskWord} from './components/fx';
 import {OilLiquid} from './components/OilLiquid';
 import {ease, lerp, rv} from './lib/anim';
 
-// Story Black Week FX MOTORS, ton « découverte » UGC : voix Léa (assets/audio/vo/prise_lea_v3_decouverte.mp3)
+// Story Black Week FX MOTORS, ton « découverte » UGC : voix Léa (assets/audio/vo/prise_lea_v4_sidi.mp3)
 // qui fait le tour de la prépa commandes ; plans remontés dans l'ordre de ce qu'elle cite (ralenti léger, jamais de zoom).
-// Repères voix (s) : prépa commandes 0,6 · « regardez ce qui part » 3,2 · casque Araï 4,77 · des bottes 6,0 ·
-// encore un casque 6,7 · un échappement 8,13 · Tech dix roses 9,09 · « vous vous êtes fait plaisir » 11,13 ·
-// « c'est la Black Week » 12,96 · -15 % 14,65 · sur tout le site 15,84 · dès 99 € 16,62 · code 17,71 ·
-// livraison offerte 18,94 · « Profitez-en vite » 21,15 · fin 21,99.
+// Repères voix (s) : prépa commandes 0,6 · « regardez ce qui part » 3,18 · casque Araï 4,77 · une paire de Sidi 6,0 ·
+// encore un casque 7,33 · un échappement 8,37 · Tech dix roses 9,49 · « vous vous êtes fait plaisir » 11,58 ·
+// « c'est la Black Week » 13,41 · -15 % 15,15 · sur tout le site 16,32 · dès 99 € 17,09 · code 18,18 ·
+// livraison offerte 19,38 · « Profitez-en vite » 21,57 · fin 22,41.
 export const BW = {
-  endAt: 437, // end card (14,57 s), sur « moins quinze pour cent »
-  total: 700, // voix finie à 21,99 s + tenue 1,3 s (la musique finit à 23 s)
+  endAt: 452, // end card (15,07 s), sur « moins quinze pour cent »
+  total: 711, // voix finie à 22,41 s + tenue 1,3 s
 };
 
 // Musique : ElevenLabs Music (musique_el.mp3, 23 s, se termine avec la vidéo) ; musique d'origine du rush : musique_bw.wav (0.037 / 0.1).
@@ -25,23 +25,23 @@ const SHOTS = [
   {at: 60, dur: 32, src: 381, rate: 0.75}, // Athena (boîte) : « chez FX Motors »
   {at: 92, dur: 51, src: 227, rate: 0.75}, // carton : « regardez ce qui part aujourd'hui »
   {at: 143, dur: 37, src: 0, rate: 1}, // Arai plan large : « un casque Araï »
-  {at: 180, dur: 21, src: 72, rate: 1}, // Sidi : « des bottes »
-  {at: 201, dur: 42, src: 151, rate: 0.95}, // Bell : « encore un casque »
-  {at: 243, dur: 30, src: 265, rate: 1.1}, // HGS : « un échappement »
-  {at: 273, dur: 60, src: 298, rate: 0.7}, // Tech 10 : « et oh, des Tech dix roses ! »
-  {at: 333, dur: 54, src: 37, rate: 0.65}, // Arai gros plan : « franchement, vous vous êtes fait plaisir »
-  {at: 387, dur: 50, src: 116, rate: 0.7}, // Sidi 2e plan : « normal, c'est la Black Week »
-]
+  {at: 180, dur: 40, src: 72, rate: 1}, // Sidi : « une paire de Sidi »
+  {at: 220, dur: 31, src: 151, rate: 1}, // Bell : « encore un casque »
+  {at: 251, dur: 34, src: 265, rate: 0.97}, // HGS : « un échappement »
+  {at: 285, dur: 62, src: 298, rate: 0.68}, // Tech 10 : « et oh, des Tech dix roses ! »
+  {at: 347, dur: 55, src: 37, rate: 0.64}, // Arai gros plan : « franchement, vous vous êtes fait plaisir »
+  {at: 402, dur: 50, src: 116, rate: 0.7}, // Sidi 2e plan : « normal, c'est la Black Week »
+];
 
 // Étiquettes produits (pas de prix), affichées quand la voix nomme le produit.
 const PRODUCTS: {from: number; to: number; cat: string; name: string}[] = [
   {from: 26, to: 92, cat: 'Moteur · YZ 125 en 144', name: 'Kit cylindre complet Athena Race'},
   {from: 146, to: 180, cat: 'Casque cross', name: 'Arai MX-V Evo'},
-  {from: 204, to: 243, cat: 'Casque cross', name: 'Bell Moto-10 MIPS'},
-  {from: 245, to: 273, cat: 'Échappement 4 temps', name: 'Échappement HGS'},
-  {from: 276, to: 333, cat: 'Bottes cross', name: 'Alpinestars Tech 10 Diva Pink'},
-  {from: 390, to: 437, cat: 'Bottes cross', name: 'Sidi Crossfire 3 SRS'},
-]
+  {from: 183, to: 220, cat: 'Bottes cross', name: 'Sidi Crossfire 3 SRS'},
+  {from: 223, to: 251, cat: 'Casque cross', name: 'Bell Moto-10 MIPS'},
+  {from: 253, to: 285, cat: 'Échappement 4 temps', name: 'Échappement HGS'},
+  {from: 288, to: 347, cat: 'Bottes cross', name: 'Alpinestars Tech 10 Diva Pink'},
+];
 
 const X = 72; // colonne de texte (marge gauche, dans la safe zone)
 
@@ -90,8 +90,8 @@ const Titles: React.FC<{f: number}> = ({f}) => {
   return (
     <>
       {block(16, 90, 'EN COULISSES CHEZ FX MOTORS', 'Prépa', 'commandes', 1020)}
-      {block(336, 385, 'VOS COMMANDES DU JOUR', 'Vous vous êtes', 'fait plaisir', 1080, 110)}
-      {block(389, 434, 'DU 23 AU 29 NOVEMBRE', 'Black', 'Week', 1010, 170)}
+      {block(350, 400, 'VOS COMMANDES DU JOUR', 'Vous vous êtes', 'fait plaisir', 1080, 110)}
+      {block(404, 449, 'DU 23 AU 29 NOVEMBRE', 'Black', 'Week', 1010, 170)}
     </>
   );
 };
@@ -196,7 +196,7 @@ export const BlackWeek: React.FC = () => {
       </Sequence>
       <Audio src={staticFile('audio/vo_bw.mp3')} volume={1} />
       {/* Musique basse sous la voix, remonte après la dernière phrase. */}
-      <Audio src={staticFile(MUSIC.file)} volume={(fr) => lerp(fr, [0, 4], [0, 1]) * lerp(fr, [660, 672], [MUSIC.under, MUSIC.after])} />
+      <Audio src={staticFile(MUSIC.file)} volume={(fr) => lerp(fr, [0, 4], [0, 1]) * lerp(fr, [672, 684], [MUSIC.under, MUSIC.after])} />
       <Sequence from={BW.endAt - 12} durationInFrames={30}>
         <Audio src={staticFile('sfx/whoosh.wav')} volume={0.3} />
       </Sequence>
