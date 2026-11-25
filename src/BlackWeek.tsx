@@ -15,6 +15,9 @@ export const BW = {
   total: 666, // voix finie à 20,66 s + tenue 1,5 s
 };
 
+// Musique : ElevenLabs Music (musique_el.mp3, 23 s, se termine avec la vidéo) ; musique d'origine du rush : musique_bw.wav (0.037 / 0.1).
+export const MUSIC = {file: 'audio/musique_el.mp3', under: 0.09, after: 0.3};
+
 // Plans : [début, durée] sur la timeline, image source de départ, vitesse (source consommée = dur × rate).
 const SHOTS = [
   {at: 0, dur: 87, src: 0, rate: 0.83}, // Arai (2 plans du rush)
@@ -188,8 +191,8 @@ export const BlackWeek: React.FC = () => {
         <EndCard />
       </Sequence>
       <Audio src={staticFile('audio/vo_bw.mp3')} volume={1} />
-      {/* Musique d'origine du rush (relancée sur sa frappe à la coupe Athena), basse sous la voix, remonte après la dernière phrase. */}
-      <Audio src={staticFile('audio/musique_bw.wav')} volume={(fr) => lerp(fr, [0, 4], [0, 1]) * lerp(fr, [620, 636], [0.037, 0.1])} />
+      {/* Musique basse sous la voix, remonte après la dernière phrase. */}
+      <Audio src={staticFile(MUSIC.file)} volume={(fr) => lerp(fr, [0, 4], [0, 1]) * lerp(fr, [620, 636], [MUSIC.under, MUSIC.after])} />
       <Sequence from={BW.endAt - 12} durationInFrames={30}>
         <Audio src={staticFile('sfx/whoosh.wav')} volume={0.3} />
       </Sequence>
