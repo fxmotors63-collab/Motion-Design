@@ -6,13 +6,13 @@ import {OilLiquid} from './components/OilLiquid';
 import {ease, lerp, rv} from './lib/anim';
 
 // Story Black Week FX MOTORS, ton « découverte » UGC : voix Léa (assets/audio/vo/prise_lea_v3_decouverte.mp3)
-// qui fait le tour de la prépa commandes, posée sur le montage d'origine laissé tel quel ; end card à 13,5 s.
+// qui fait le tour de la prépa commandes ; plans remontés dans l'ordre de ce qu'elle cite (ralenti léger, jamais de zoom).
 // Repères voix (s) : prépa commandes 0,6 · « regardez ce qui part » 3,2 · casque Araï 4,77 · des bottes 6,0 ·
 // encore un casque 6,7 · un échappement 8,13 · Tech dix roses 9,09 · « vous vous êtes fait plaisir » 11,13 ·
 // « c'est la Black Week » 12,96 · -15 % 14,65 · sur tout le site 15,84 · dès 99 € 16,62 · code 17,71 ·
 // livraison offerte 18,94 · « Profitez-en vite » 21,15 · fin 21,99.
 export const BW = {
-  endAt: 405, // end card à 13,5 s : fin du montage d'origine (laissé tel quel)
+  endAt: 437, // end card (14,57 s), sur « moins quinze pour cent »
   total: 700, // voix finie à 21,99 s + tenue 1,3 s (la musique finit à 23 s)
 };
 
@@ -20,18 +20,28 @@ export const BW = {
 export const MUSIC = {file: 'audio/musique_el.mp3', under: 0.09, after: 0.3};
 
 // Plans : [début, durée] sur la timeline, image source de départ, vitesse (source consommée = dur × rate).
-// Montage d'origine du rush, laissé tel quel (ordre, rythme, vitesse 1).
-const SHOTS = [{at: 0, dur: 405, src: 0, rate: 1}];
+const SHOTS = [
+  {at: 0, dur: 60, src: 340, rate: 0.68}, // Athena (cylindre) : « petit tour à la prépa commandes »
+  {at: 60, dur: 32, src: 381, rate: 0.75}, // Athena (boîte) : « chez FX Motors »
+  {at: 92, dur: 51, src: 227, rate: 0.75}, // carton : « regardez ce qui part aujourd'hui »
+  {at: 143, dur: 37, src: 0, rate: 1}, // Arai plan large : « un casque Araï »
+  {at: 180, dur: 21, src: 72, rate: 1}, // Sidi : « des bottes »
+  {at: 201, dur: 42, src: 151, rate: 0.95}, // Bell : « encore un casque »
+  {at: 243, dur: 30, src: 265, rate: 1.1}, // HGS : « un échappement »
+  {at: 273, dur: 60, src: 298, rate: 0.7}, // Tech 10 : « et oh, des Tech dix roses ! »
+  {at: 333, dur: 54, src: 37, rate: 0.65}, // Arai gros plan : « franchement, vous vous êtes fait plaisir »
+  {at: 387, dur: 50, src: 116, rate: 0.7}, // Sidi 2e plan : « normal, c'est la Black Week »
+]
 
 // Étiquettes produits (pas de prix), affichées quand la voix nomme le produit.
 const PRODUCTS: {from: number; to: number; cat: string; name: string}[] = [
-  {from: 6, to: 72, cat: 'Casque cross', name: 'Arai MX-V Evo'},
-  {from: 76, to: 151, cat: 'Bottes cross', name: 'Sidi Crossfire 3 SRS'},
-  {from: 155, to: 227, cat: 'Casque cross', name: 'Bell Moto-10 MIPS'},
-  {from: 267, to: 298, cat: 'Échappement 4 temps', name: 'Échappement HGS'},
-  {from: 300, to: 340, cat: 'Bottes cross', name: 'Alpinestars Tech 10 Diva Pink'},
-  {from: 342, to: 402, cat: 'Moteur · YZ 125 en 144', name: 'Kit cylindre complet Athena Race'},
-];
+  {from: 26, to: 92, cat: 'Moteur · YZ 125 en 144', name: 'Kit cylindre complet Athena Race'},
+  {from: 146, to: 180, cat: 'Casque cross', name: 'Arai MX-V Evo'},
+  {from: 204, to: 243, cat: 'Casque cross', name: 'Bell Moto-10 MIPS'},
+  {from: 245, to: 273, cat: 'Échappement 4 temps', name: 'Échappement HGS'},
+  {from: 276, to: 333, cat: 'Bottes cross', name: 'Alpinestars Tech 10 Diva Pink'},
+  {from: 390, to: 437, cat: 'Bottes cross', name: 'Sidi Crossfire 3 SRS'},
+]
 
 const X = 72; // colonne de texte (marge gauche, dans la safe zone)
 
@@ -79,8 +89,9 @@ const Titles: React.FC<{f: number}> = ({f}) => {
   };
   return (
     <>
-      {block(16, 70, 'EN COULISSES CHEZ FX MOTORS', 'Prépa', 'commandes', 1020)}
-      {block(334, 400, 'VOS COMMANDES DU JOUR', 'Vous vous êtes', 'fait plaisir', 1080, 110)}
+      {block(16, 90, 'EN COULISSES CHEZ FX MOTORS', 'Prépa', 'commandes', 1020)}
+      {block(336, 385, 'VOS COMMANDES DU JOUR', 'Vous vous êtes', 'fait plaisir', 1080, 110)}
+      {block(389, 434, 'DU 23 AU 29 NOVEMBRE', 'Black', 'Week', 1010, 170)}
     </>
   );
 };
@@ -100,7 +111,7 @@ const Shade: React.FC<{f: number}> = ({f}) => {
 const TopBar: React.FC<{f: number}> = ({f}) => {
   const p = rv(f, 0, 14);
   const out = lerp(f, [BW.endAt - 8, BW.endAt], [1, 0]);
-  const offer = rv(f, 76, 14);
+  const offer = rv(f, 143, 14);
   return (
     <div style={{position: 'absolute', top: SAFE.top, width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14, opacity: out}}>
       <Img src={staticFile('img/fxmotors.png')} style={{width: 170, opacity: p, filter: 'drop-shadow(0 4px 14px rgba(0,0,0,0.35))'}} />
@@ -115,7 +126,7 @@ const TopBar: React.FC<{f: number}> = ({f}) => {
 };
 
 // End card, révélée au rythme de la voix (frames locales) :
-// « c'est la Black Week » 0 · « moins quinze pour cent » 35 · « sur tout le site » 70 · « dès 99 € » 94 · « code BLACK FX quinze » 126 · « livraison offerte » 163 · « Profitez-en vite » 230.
+// « Moins quinze pour cent » 3 · « sur tout le site » 38 · « dès 99 € » 63 · « code BLACK FX quinze » 96 · « livraison offerte » 133 · « Profitez-en vite » 198.
 const EndCard: React.FC = () => {
   const f = useCurrentFrame();
   const r = (at: number) => rv(f, at, 14);
@@ -124,39 +135,36 @@ const EndCard: React.FC = () => {
       <div style={{position: 'absolute', top: SAFE.top, width: '100%', display: 'flex', justifyContent: 'center', opacity: r(8), transform: `translateY(${(1 - r(8)) * 24}px)`}}>
         <Img src={staticFile('img/fxmotors.png')} style={{width: FX_LOGO_W}} />
       </div>
-      <div style={{position: 'absolute', top: 480, left: X, right: X, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center'}}>
-        <Label p={r(2)} size={26}>DU 23 AU 29 NOVEMBRE</Label>
-        <div style={{fontFamily: FONTS.title, fontSize: 110, lineHeight: 1.02, color: COLORS.white, textTransform: 'uppercase', marginTop: 8}}>
-          <MaskWord p={r(0)}>Black</MaskWord> <MaskWord p={r(5)} style={{color: COLORS.yellow}}>Week</MaskWord>
-        </div>
+      <div style={{position: 'absolute', top: 590, left: X, right: X, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center'}}>
+        <Label p={r(2)} size={28}>BLACK WEEK · JUSQU'AU 29.11</Label>
         <div style={{fontFamily: FONTS.title, fontSize: 270, lineHeight: 1, color: COLORS.yellow, marginTop: 14}}>
-          <MaskWord p={r(33)}>-15 %</MaskWord>
+          <MaskWord p={r(4)}>-15 %</MaskWord>
         </div>
         <div style={{fontFamily: FONTS.title, fontSize: 84, lineHeight: 1.02, color: COLORS.white, textTransform: 'uppercase'}}>
-          <MaskWord p={r(68)}>Sur tout le site</MaskWord>
+          <MaskWord p={r(36)}>Sur tout le site</MaskWord>
         </div>
         <div style={{fontFamily: FONTS.info, fontWeight: 600, fontSize: 40, color: COLORS.white, marginTop: 14}}>
-          <MaskWord p={r(93)}>Dès 99 € d'achat</MaskWord>
+          <MaskWord p={r(61)}>Dès 99 € d'achat</MaskWord>
         </div>
-        <Hairline p={r(118)} color={COLORS.line} origin="center" style={{width: 700, marginTop: 44}} />
+        <Hairline p={r(90)} color={COLORS.line} origin="center" style={{width: 700, marginTop: 44}} />
         <div style={{display: 'flex', width: 700, marginTop: 34, justifyContent: 'space-between', alignItems: 'flex-start'}}>
-          <div style={{textAlign: 'left', opacity: r(126), transform: `translateY(${(1 - r(126)) * 16}px)`}}>
-            <Label p={r(126)} size={20} color={COLORS.grey}>CODE</Label>
+          <div style={{textAlign: 'left', opacity: r(94), transform: `translateY(${(1 - r(94)) * 16}px)`}}>
+            <Label p={r(94)} size={20} color={COLORS.grey}>CODE</Label>
             <div style={{fontFamily: FONTS.title, fontSize: 64, lineHeight: 1.1, color: COLORS.white}}>BLACKFX15</div>
           </div>
-          <div style={{width: 2, alignSelf: 'stretch', background: COLORS.line, opacity: r(144)}} />
-          <div style={{textAlign: 'right', opacity: r(163), transform: `translateY(${(1 - r(163)) * 16}px)`}}>
-            <Label p={r(163)} size={20} color={COLORS.grey}>LIVRAISON</Label>
+          <div style={{width: 2, alignSelf: 'stretch', background: COLORS.line, opacity: r(112)}} />
+          <div style={{textAlign: 'right', opacity: r(131), transform: `translateY(${(1 - r(131)) * 16}px)`}}>
+            <Label p={r(131)} size={20} color={COLORS.grey}>LIVRAISON</Label>
             <div style={{fontFamily: FONTS.title, fontSize: 64, lineHeight: 1.1, color: COLORS.white, textTransform: 'uppercase'}}>Offerte</div>
             <div style={{fontFamily: FONTS.info, fontWeight: 500, fontSize: 24, color: COLORS.grey}}>dès 99 €</div>
           </div>
         </div>
       </div>
-      <div style={{position: 'absolute', top: 1430, width: '100%', textAlign: 'center', fontFamily: FONTS.info, fontWeight: 600, fontSize: 30, letterSpacing: 8, color: COLORS.white, opacity: r(200)}}>
+      <div style={{position: 'absolute', top: 1430, width: '100%', textAlign: 'center', fontFamily: FONTS.info, fontWeight: 600, fontSize: 30, letterSpacing: 8, color: COLORS.white, opacity: r(170)}}>
         FXMOTORS.FR
       </div>
       <div style={{position: 'absolute', top: 1330, width: '100%', textAlign: 'center', fontFamily: FONTS.title, fontSize: 72, lineHeight: 1, color: COLORS.yellow, textTransform: 'uppercase'}}>
-        <MaskWord p={r(228)}>Profitez-en vite</MaskWord>
+        <MaskWord p={r(196)}>Profitez-en vite</MaskWord>
       </div>
       <OilLiquid progress={1 - lerp(f, [0, 14], [0, 1], ease.inOut)} frame={f} id="bwend" />
     </AbsoluteFill>
