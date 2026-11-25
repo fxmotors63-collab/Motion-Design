@@ -188,6 +188,8 @@ export const BlackWeek: React.FC = () => {
         <EndCard />
       </Sequence>
       <Audio src={staticFile('audio/vo_bw.mp3')} volume={1} />
+      {/* Musique d'origine du rush (relancée sur sa frappe à la coupe Athena), basse sous la voix, remonte après la dernière phrase. */}
+      <Audio src={staticFile('audio/musique_bw.wav')} volume={(fr) => lerp(fr, [0, 4], [0, 1]) * lerp(fr, [620, 636], [0.037, 0.1])} />
       <Sequence from={BW.endAt - 12} durationInFrames={30}>
         <Audio src={staticFile('sfx/whoosh.wav')} volume={0.3} />
       </Sequence>
