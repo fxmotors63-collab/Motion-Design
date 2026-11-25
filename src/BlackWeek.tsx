@@ -6,17 +6,14 @@ import {OilLiquid} from './components/OilLiquid';
 import {ease, lerp, rv} from './lib/anim';
 
 // Story Black Week FX MOTORS, ton « découverte » UGC : voix Léa (assets/audio/vo/prise_lea_v3_decouverte.mp3)
-// qui fait le tour de la prépa commandes, sur le montage d'origine laissé tel quel ; end card à 13,5 s.
-// La prise est redécoupée phrase par phrase (public/audio/vo_bw.wav) pour tomber sur le bon plan :
-// prépa commandes 0 (Arai) · des bottes 3,1 (Sidi) · encore un casque 5,15 (Bell) · regardez ce qui part 7,45 (carton) ·
-// un échappement 8,88 (HGS) · Tech dix roses 9,88 (Tech 10) · vous vous êtes fait plaisir 11,85 (Athena) · Black Week… 13,62 (end card).
+// qui fait le tour de la prépa commandes, posée sur le montage d'origine laissé tel quel ; end card à 13,5 s.
 // Repères voix (s) : prépa commandes 0,6 · « regardez ce qui part » 3,2 · casque Araï 4,77 · des bottes 6,0 ·
 // encore un casque 6,7 · un échappement 8,13 · Tech dix roses 9,09 · « vous vous êtes fait plaisir » 11,13 ·
 // « c'est la Black Week » 12,96 · -15 % 14,65 · sur tout le site 15,84 · dès 99 € 16,62 · code 17,71 ·
 // livraison offerte 18,94 · « Profitez-en vite » 21,15 · fin 21,99.
 export const BW = {
   endAt: 405, // end card à 13,5 s : fin du montage d'origine (laissé tel quel)
-  total: 720, // voix finie à 22,7 s + tenue 1,3 s
+  total: 700, // voix finie à 21,99 s + tenue 1,3 s (la musique finit à 23 s)
 };
 
 // Musique : ElevenLabs Music (musique_el.mp3, 23 s, se termine avec la vidéo) ; musique d'origine du rush : musique_bw.wav (0.037 / 0.1).
@@ -83,7 +80,7 @@ const Titles: React.FC<{f: number}> = ({f}) => {
   return (
     <>
       {block(16, 70, 'EN COULISSES CHEZ FX MOTORS', 'Prépa', 'commandes', 1020)}
-      {block(355, 402, 'VOS COMMANDES DU JOUR', 'Vous vous êtes', 'fait plaisir', 1080, 110)}
+      {block(334, 400, 'VOS COMMANDES DU JOUR', 'Vous vous êtes', 'fait plaisir', 1080, 110)}
     </>
   );
 };
@@ -128,38 +125,38 @@ const EndCard: React.FC = () => {
         <Img src={staticFile('img/fxmotors.png')} style={{width: FX_LOGO_W}} />
       </div>
       <div style={{position: 'absolute', top: 480, left: X, right: X, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center'}}>
-        <Label p={r(18)} size={26}>DU 23 AU 29 NOVEMBRE</Label>
+        <Label p={r(2)} size={26}>DU 23 AU 29 NOVEMBRE</Label>
         <div style={{fontFamily: FONTS.title, fontSize: 110, lineHeight: 1.02, color: COLORS.white, textTransform: 'uppercase', marginTop: 8}}>
-          <MaskWord p={r(20)}>Black</MaskWord> <MaskWord p={r(25)} style={{color: COLORS.yellow}}>Week</MaskWord>
+          <MaskWord p={r(0)}>Black</MaskWord> <MaskWord p={r(5)} style={{color: COLORS.yellow}}>Week</MaskWord>
         </div>
         <div style={{fontFamily: FONTS.title, fontSize: 270, lineHeight: 1, color: COLORS.yellow, marginTop: 14}}>
-          <MaskWord p={r(53)}>-15 %</MaskWord>
+          <MaskWord p={r(33)}>-15 %</MaskWord>
         </div>
         <div style={{fontFamily: FONTS.title, fontSize: 84, lineHeight: 1.02, color: COLORS.white, textTransform: 'uppercase'}}>
-          <MaskWord p={r(88)}>Sur tout le site</MaskWord>
+          <MaskWord p={r(68)}>Sur tout le site</MaskWord>
         </div>
         <div style={{fontFamily: FONTS.info, fontWeight: 600, fontSize: 40, color: COLORS.white, marginTop: 14}}>
-          <MaskWord p={r(113)}>Dès 99 € d'achat</MaskWord>
+          <MaskWord p={r(93)}>Dès 99 € d'achat</MaskWord>
         </div>
-        <Hairline p={r(138)} color={COLORS.line} origin="center" style={{width: 700, marginTop: 44}} />
+        <Hairline p={r(118)} color={COLORS.line} origin="center" style={{width: 700, marginTop: 44}} />
         <div style={{display: 'flex', width: 700, marginTop: 34, justifyContent: 'space-between', alignItems: 'flex-start'}}>
-          <div style={{textAlign: 'left', opacity: r(146), transform: `translateY(${(1 - r(146)) * 16}px)`}}>
-            <Label p={r(146)} size={20} color={COLORS.grey}>CODE</Label>
+          <div style={{textAlign: 'left', opacity: r(126), transform: `translateY(${(1 - r(126)) * 16}px)`}}>
+            <Label p={r(126)} size={20} color={COLORS.grey}>CODE</Label>
             <div style={{fontFamily: FONTS.title, fontSize: 64, lineHeight: 1.1, color: COLORS.white}}>BLACKFX15</div>
           </div>
-          <div style={{width: 2, alignSelf: 'stretch', background: COLORS.line, opacity: r(164)}} />
-          <div style={{textAlign: 'right', opacity: r(183), transform: `translateY(${(1 - r(183)) * 16}px)`}}>
-            <Label p={r(183)} size={20} color={COLORS.grey}>LIVRAISON</Label>
+          <div style={{width: 2, alignSelf: 'stretch', background: COLORS.line, opacity: r(144)}} />
+          <div style={{textAlign: 'right', opacity: r(163), transform: `translateY(${(1 - r(163)) * 16}px)`}}>
+            <Label p={r(163)} size={20} color={COLORS.grey}>LIVRAISON</Label>
             <div style={{fontFamily: FONTS.title, fontSize: 64, lineHeight: 1.1, color: COLORS.white, textTransform: 'uppercase'}}>Offerte</div>
             <div style={{fontFamily: FONTS.info, fontWeight: 500, fontSize: 24, color: COLORS.grey}}>dès 99 €</div>
           </div>
         </div>
       </div>
-      <div style={{position: 'absolute', top: 1430, width: '100%', textAlign: 'center', fontFamily: FONTS.info, fontWeight: 600, fontSize: 30, letterSpacing: 8, color: COLORS.white, opacity: r(220)}}>
+      <div style={{position: 'absolute', top: 1430, width: '100%', textAlign: 'center', fontFamily: FONTS.info, fontWeight: 600, fontSize: 30, letterSpacing: 8, color: COLORS.white, opacity: r(200)}}>
         FXMOTORS.FR
       </div>
       <div style={{position: 'absolute', top: 1330, width: '100%', textAlign: 'center', fontFamily: FONTS.title, fontSize: 72, lineHeight: 1, color: COLORS.yellow, textTransform: 'uppercase'}}>
-        <MaskWord p={r(248)}>Profitez-en vite</MaskWord>
+        <MaskWord p={r(228)}>Profitez-en vite</MaskWord>
       </div>
       <OilLiquid progress={1 - lerp(f, [0, 14], [0, 1], ease.inOut)} frame={f} id="bwend" />
     </AbsoluteFill>
@@ -189,9 +186,9 @@ export const BlackWeek: React.FC = () => {
       <Sequence from={BW.endAt}>
         <EndCard />
       </Sequence>
-      <Audio src={staticFile('audio/vo_bw.wav')} volume={1} />
+      <Audio src={staticFile('audio/vo_bw.mp3')} volume={1} />
       {/* Musique basse sous la voix, remonte après la dernière phrase. */}
-      <Audio src={staticFile(MUSIC.file)} volume={(fr) => lerp(fr, [0, 4], [0, 1]) * lerp(fr, [681, 693], [MUSIC.under, MUSIC.after])} />
+      <Audio src={staticFile(MUSIC.file)} volume={(fr) => lerp(fr, [0, 4], [0, 1]) * lerp(fr, [660, 672], [MUSIC.under, MUSIC.after])} />
       <Sequence from={BW.endAt - 12} durationInFrames={30}>
         <Audio src={staticFile('sfx/whoosh.wav')} volume={0.3} />
       </Sequence>
